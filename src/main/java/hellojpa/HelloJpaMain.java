@@ -16,23 +16,13 @@ public class HelloJpaMain {
         transaction.begin();
 
         try {
-//            Member member = new Member();
-//            member.setId(2L);
-//            member.setName("ron2");
-              // 이때 insert sql 쿼리를 날리지 않는다. insert sql은 생성해서 쓰기 지연 sql 저장소에 저장 해둔다. flush
-//            entityManager.persist(member); // 영속성 컨텍스트에 담는다.
 
-//            Member targetMember = entityManager.find(Member.class, 2L);
-//            Member targetMember1 = entityManager.find(Member.class, 2L);
-//            System.out.println("같은 트랜잭션 안에서 영속 엔티티의 동일성 보장 -> " + (targetMember1 == targetMember));
+            Member member = new Member();
+            member.setMemberName("ronor");
 
-            Member targetMember = entityManager.find(Member.class, 2L);
-            targetMember.setName("updated"); // update 퀴리를 보냄 dirty checking
-            entityManager.remove(targetMember); // 삭제
-            entityManager.detach(targetMember); // 영속성 컨텍스트에서 빠진다. -> 준영속 상태(detached)
-            entityManager.clear(); // 영속성 컨텍스트 전체를 초기화
+            entityManager.persist(member);
 
-            transaction.commit(); // flush 자동 호출
+            transaction.commit();
         } catch (Exception e) {
             transaction.rollback();
         } finally {

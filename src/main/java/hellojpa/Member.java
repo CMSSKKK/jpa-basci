@@ -6,13 +6,20 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
+@TableGenerator(
+        name = "member_seq_generator",
+        table = "my_sequences",
+        pkColumnValue = "member_seq", allocationSize = 100)
 public class Member {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.TABLE,
+                    generator = "meber_seq_generator")
+    //@GeneratedValue(strategy = GenerationType.IDENTITY) // mysql AUTO_INCREMENT
     private Long id;
 
-    @Column(name = "membername", nullable = false) // not null
-    private String name;
+    @Column(name = "name", nullable = false) // not null
+    private String memberName;
 
     private Integer age;
 
@@ -28,7 +35,8 @@ public class Member {
     @Lob //문자타입의 필드면 clob(String, char[], java.sql.CLOB) 또는 나머지 필드느 Blob(byte[], java.sql.BLOB)
     private String description;
 
-    @Transient // 테이블과 매핑하지않는 필드는    private int temp;
+    @Transient // 테이블과 매핑하지않는 필드는
+    private int temp;
 
     public Member() {
     }
@@ -42,19 +50,19 @@ public class Member {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getMemberName() {
+        return memberName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setMemberName(String memberName) {
+        this.memberName = memberName;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
@@ -74,12 +82,20 @@ public class Member {
         this.createdDate = createdDate;
     }
 
-    public Date getLastModifiedDate() {
+    public LocalDateTime getLastModifiedDate() {
         return lastModifiedDate;
     }
 
-    public void setLastModifiedDate(Date lastModifiedDate) {
+    public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public LocalDate getTestDate() {
+        return testDate;
+    }
+
+    public void setTestDate(LocalDate testDate) {
+        this.testDate = testDate;
     }
 
     public String getDescription() {
@@ -88,5 +104,13 @@ public class Member {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getTemp() {
+        return temp;
+    }
+
+    public void setTemp(int temp) {
+        this.temp = temp;
     }
 }
